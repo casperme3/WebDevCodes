@@ -35,14 +35,15 @@ app.get('/farms/new', (req, res) => {
 
 app.get('/farms/:id', async (req, res) => {
     const { id } = req.params;
-    const farm = await Farm.findById(id);
-    console.log(farm);
+    const farm = await Farm.findById(id).populate('products');
+    // console.log(farm);
     res.render('farms/detail', { farm });
 })
 
-app.get('/farms/:id/products/new', (req, res) => {
+app.get('/farms/:id/products/new', async (req, res) => {
     const { id } = req.params;
-    res.render('products/new', { categories, id });
+    const farm = await Farm.findById(id);
+    res.render('products/new', { categories, farm });
 })
 
 app.post('/farms/:id/products', async (req, res) => {
@@ -51,12 +52,11 @@ app.post('/farms/:id/products', async (req, res) => {
     const { name, price, category } = req.body;
     const newProd = new Product({ name, price, category }); //or pass "req.body" directly here
     // const prod = await newProd.save();
-
     farm.products.push(newProd);
     newProd.farm = farm;
     await farm.save();
     await newProd.save();
-    res.send(farm);
+    res.redirect(`/farms/${id}`)
 })
 
 /// Products Route Section
@@ -91,11 +91,17 @@ app.get('/products/new', (req, res) => {
 
 app.get('/products/:id', async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findById(id);
-    console.log(product);
+    const product = await Product.findById(id).populate('farm', 'name'); //specify to populate only the 'name' field of the farm.
+    //console.log(product);
     // res.send("ID Found!");
     // res.render('products/detail', { product })
     res.render('products/detail', { product })
+})
+
+app.delete('/products/:id', async (req, res) => {
+    const { id } = req.params;
+    const remfarm = await Farm.findByIdAndDelete(id);
+    res.redirect('/farms')
 })
 
 app.get('/products/:id/edit', async (req, res) => {
