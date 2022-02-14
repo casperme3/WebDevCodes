@@ -6,7 +6,7 @@
 <div class="card mb-3">
   <div class="row">
     <div class="col-md-4">
-      <img class="img-fluid" alt="" src="<%= camp.image %>">
+      <img class="img-fluid" alt="" src="<%= camp.images[0].url %>">
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -16,7 +16,9 @@
           <small class="text-muted"><%= camp.location %></small>
         </p>
         <p class="card-text">Price: <%= camp.price %>/night </p>
-        <a class="btn btn-primary" href="/campgrounds/<%= camp._id %>">VIEW</a>
+        <a class="btn btn-primary" href="/campgrounds/<%= camp._id %>">
+          [VIEW] <%= camp.title %>
+        </a>
       </div>
     </div>
   </div>

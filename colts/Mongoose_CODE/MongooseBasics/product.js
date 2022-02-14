@@ -51,12 +51,13 @@ productSchema.methods.toggleOnSale = function () {
     return this.save();
 }
 
-
+//NOLAN: methods is tied up to the instance of the model.
 productSchema.methods.addCategory = function (newCat) {
     this.categories.push(newCat);
     return this.save();
 }
 
+//NOLAN: statics is tied up to the model only.
 productSchema.statics.fireSale = function () {
     return this.updateMany({}, { onSale: true, price: 0 })
 }

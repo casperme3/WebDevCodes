@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const Product = require('./models/product');
 const Farm = require('./models/farm');
-const farm = require('./models/farm');
 
 main().catch(err => console.log('ERRORRRRR ERRRRR!!!!!: ', err));
 async function main() {
@@ -59,7 +58,17 @@ app.post('/farms/:id/products', async (req, res) => {
     res.redirect(`/farms/${id}`)
 })
 
+app.delete('/farms/:id', async (req, res) => {
+    const { id } = req.params;
+    // console.log('##Before Calling findByIdAndDelete...')
+    const remfarm = await Farm.findByIdAndDelete(id);
+    // console.log('##After Calling findByIdAndDelete...')
+    res.redirect('/farms')
+})
+
+/////////////////////////////////////////////////////////////////
 /// Products Route Section
+/////////////////////////////////////////////////////////////////
 const categories = ['dairy', 'fruit', 'vegetable'];
 
 app.get('/products', async (req, res) => {
@@ -96,12 +105,6 @@ app.get('/products/:id', async (req, res) => {
     // res.send("ID Found!");
     // res.render('products/detail', { product })
     res.render('products/detail', { product })
-})
-
-app.delete('/products/:id', async (req, res) => {
-    const { id } = req.params;
-    const remfarm = await Farm.findByIdAndDelete(id);
-    res.redirect('/farms')
 })
 
 app.get('/products/:id/edit', async (req, res) => {
