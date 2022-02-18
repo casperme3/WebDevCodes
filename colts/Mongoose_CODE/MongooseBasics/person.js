@@ -13,6 +13,7 @@ const personSchema = new mongoose.Schema({
     last: String
 })
 
+//'fullname' property does not exist in the database, but we could access it because of virtual.
 personSchema.virtual('fullName').get(function () {
     return `${this.first} ${this.last}`
 })

@@ -25,6 +25,7 @@ const farmSchema = new Schema({
 //     console.log(data);
 // });
 
+//This will be called after calling executing "Farm.findByIdAndDelete(id)"
 farmSchema.post('findOneAndDelete', async function (farm) {
     if (farm.products.length) {
         const result = await Product.deleteMany({ _id: { $in: farm.products } })
