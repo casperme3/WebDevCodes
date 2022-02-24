@@ -15,7 +15,7 @@ const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 250; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) + 10;
         const new_camp = new Campground({
@@ -34,16 +34,16 @@ const seedDB = async () => {
             },
             images: [
                 {
-                    url: 'https://res.cloudinary.com/dbapxhh4h/image/upload/v1644481982/YlansYelpCamp/nt8mbvi9f5xlhy6myhfb.jpg',
-                    filename: 'YlansYelpCamp/nt8mbvi9f5xlhy6myhfb'
+                    url: 'https://res.cloudinary.com/dbapxhh4h/image/upload/v1645004921/YlansYelpCamp/n02mcq62nuteegdhrfqo.jpg',
+                    filename: 'YlansYelpCamp/n02mcq62nuteegdhrfqo'
                 },
                 {
-                    url: 'https://res.cloudinary.com/dbapxhh4h/image/upload/v1644481982/YlansYelpCamp/brh1aarbjreso1n4fxao.jpg',
-                    filename: 'YlansYelpCamp/brh1aarbjreso1n4fxao'
+                    url: 'https://res.cloudinary.com/dbapxhh4h/image/upload/v1644910960/YlansYelpCamp/r3snlf6knvipgebzicg8.jpg',
+                    filename: 'YlansYelpCamp/r3snlf6knvipgebzicg8'
                 },
                 {
-                    url: 'https://res.cloudinary.com/dbapxhh4h/image/upload/v1644481982/YlansYelpCamp/qo0q7xz90ybuum0h2eit.jpg',
-                    filename: 'YlansYelpCamp/qo0q7xz90ybuum0h2eit'
+                    url: 'https://res.cloudinary.com/dbapxhh4h/image/upload/v1644819687/YlansYelpCamp/tuoszcmwsshgqbvispot.jpg',
+                    filename: 'YlansYelpCamp/tuoszcmwsshgqbvispot.jpg'
                 }
             ]
         })

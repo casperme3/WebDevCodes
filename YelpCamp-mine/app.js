@@ -16,8 +16,13 @@ const usersRoute = require('./routes/users');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const MongoDBStore = require('connect-mongo');
 
-mongoose.connect('mongodb://localhost:27017/yelpcamp');
+const dbURL = process.env.DB_URL || 'mongodb://localhost:27017/yelpcamp';
+const secret = process.env.SECRET || 'thisismysecretkey';
+
+// mongoose.connect('');
+mongoose.connect(dbURL);
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "console error:"));
 db.once("open", () => {
@@ -33,8 +38,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const store = new MongoDBStore({
+    mongoUrl: dbURL,
+    secret,
+    touchAfter: 24 * 3600
+});
+
+store.on('error', function (e) {
+    console.log('Session Store Error', e);
+});
+
 const sessConfig = {
-    secret: 'thisismysecretkey',
+    store,
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -73,6 +89,10 @@ app.use((req, res, next) => {
 app.use('/', usersRoute);
 app.use('/campgrounds', campgroundsRoute);
 app.use('/campgrounds/:id/reviews', reviewsRoute);
+
+app.get('/', (req, res) => {
+    res.render('home');
+})
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page not found!', 404));

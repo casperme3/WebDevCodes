@@ -1,10 +1,12 @@
 mapboxgl.accessToken = mbxMapToken;
 const map = new mapboxgl.Map({
-    container: 'map',
+    container: 'cluster-map',
     style: `mapbox://styles/mapbox/${mapStyle}`,
     center: [-103.5917, 40.6699],
     zoom: 3
 });
+
+map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
 // console.log(campsites);
 
@@ -106,7 +108,7 @@ map.on('load', () => {
         const { popUpText } = e.features[0].properties;
         const coordinates = e.features[0].geometry.coordinates.slice();
 
-        console.log(msg)
+        // console.log(popUpText)
         // Ensure that if the map is zoomed out such that
         // multiple copies of the feature are visible, the
         // popup appears over the copy being pointed to.
