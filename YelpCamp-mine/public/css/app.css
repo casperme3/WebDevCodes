@@ -7,3 +7,12 @@
     width: 100%;
     height: 300px;
 }
+
+#indexItem img{
+    width:100%;
+    /* height: 100%; */
+}
+
+#campgroundCarousel img{
+    height: 300px;
+}
